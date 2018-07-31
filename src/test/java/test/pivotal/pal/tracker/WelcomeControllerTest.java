@@ -3,7 +3,7 @@ package test.pivotal.pal.tracker;
 import io.pivotal.pal.tracker.WelcomeController;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class WelcomeControllerTest {
 
