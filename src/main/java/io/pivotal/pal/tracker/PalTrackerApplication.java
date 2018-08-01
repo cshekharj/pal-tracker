@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mysql.cj.jdbc.MysqlDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +21,10 @@ public class PalTrackerApplication {
         SpringApplication.run(PalTrackerApplication.class, args);
     }
     @Bean
-    public TimeEntryRepository getRepository(){
-        return new InMemoryTimeEntryRepository();
+    public TimeEntryRepository getRepository(@Value("${SPRING_DATASOURCE_URL}") final String datasSourceUrl) {
+        MysqlDataSource dataSource = new MysqlDataSource();
+        dataSource.setUrl(datasSourceUrl);
+        return new JdbcTimeEntryRepository(dataSource);
     }
 
     @Bean
